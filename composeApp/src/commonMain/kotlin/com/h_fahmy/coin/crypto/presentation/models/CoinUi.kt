@@ -1,7 +1,7 @@
 package com.h_fahmy.coin.crypto.presentation.models
 
 import com.h_fahmy.coin.crypto.domain.Coin
-import com.h_fahmy.coin.crypto.presentation.util.getDrawableForCoin
+import com.h_fahmy.coin.core.presentation.util.getDrawableForCoin
 import org.jetbrains.compose.resources.DrawableResource
 import java.text.NumberFormat
 import java.util.Locale

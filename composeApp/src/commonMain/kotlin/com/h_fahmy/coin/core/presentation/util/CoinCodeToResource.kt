@@ -1,4 +1,4 @@
-package com.h_fahmy.coin.crypto.presentation.util
+package com.h_fahmy.coin.core.presentation.util
 
 import coinc.composeapp.generated.resources.Res
 import coinc.composeapp.generated.resources.*
