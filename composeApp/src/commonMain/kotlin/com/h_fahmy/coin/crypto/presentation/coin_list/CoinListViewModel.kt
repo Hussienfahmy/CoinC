@@ -37,23 +37,24 @@ class CoinListViewModel(
             is CoinListAction.OnCoinClick -> {
                 selectCoin(action.coinUi)
             }
+
+            CoinListAction.Retry -> loadCoins()
         }
     }
 
     private fun selectCoin(coinUi: CoinUi) {
         _state.update { it.copy(selectedCoin = coinUi) }
-
-
     }
 
     private fun loadCoins() {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    isLoading = true
-                )
-            }
+        _state.update {
+            it.copy(
+                isLoading = true,
+                isError = false
+            )
+        }
 
+        viewModelScope.launch {
             coinDataSource
                 .getCoins()
                 .onSuccess { coins ->
@@ -65,7 +66,7 @@ class CoinListViewModel(
                     }
                 }
                 .onError { error ->
-                    _state.update { it.copy(isLoading = false) }
+                    _state.update { it.copy(isLoading = false, isError = true) }
                     _events.send(CoinListEvent.Error(error))
                 }
         }

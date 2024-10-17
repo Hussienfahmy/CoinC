@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,12 +19,21 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun CoinListScreen(
+    modifier: Modifier = Modifier,
     state: CoinListState,
-    modifier: Modifier = Modifier
+    onRetry: () -> Unit
 ) {
     if (state.isLoading) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
+        }
+    } else if (state.isError) {
+        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Button(
+                onClick = onRetry
+            ) {
+                Text(text = "Retry")
+            }
         }
     } else {
         LazyColumn(

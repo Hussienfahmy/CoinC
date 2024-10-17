@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.h_fahmy.coin.core.presentation.util.ObserveAsEvents
 import com.h_fahmy.coin.core.presentation.util.string
+import com.h_fahmy.coin.crypto.presentation.coin_list.CoinListAction
 import com.h_fahmy.coin.crypto.presentation.coin_list.CoinListEvent
 import com.h_fahmy.coin.crypto.presentation.coin_list.CoinListScreen
 import com.h_fahmy.coin.crypto.presentation.coin_list.CoinListViewModel
@@ -51,6 +52,7 @@ fun App(
             CoinListScreen(
                 modifier = Modifier.padding(innerPadding),
                 state = state,
+                onRetry = { viewModel.onAction(CoinListAction.Retry) }
             )
         }
     }
