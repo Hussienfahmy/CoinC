@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.h_fahmy.coin.crypto.presentation.coin_list.components.CoinListItem
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun CoinListScreen(
