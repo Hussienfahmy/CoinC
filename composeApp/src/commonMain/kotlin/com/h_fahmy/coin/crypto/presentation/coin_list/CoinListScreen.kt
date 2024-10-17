@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.h_fahmy.coin.crypto.domain.Coin
 import com.h_fahmy.coin.crypto.presentation.coin_list.components.CoinListItem
 import kotlinx.coroutines.flow.Flow
 
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.Flow
 fun CoinListScreen(
     modifier: Modifier = Modifier,
     state: CoinListState,
-    onRetry: () -> Unit
+    onAction: (CoinListAction) -> Unit
 ) {
     if (state.isLoading) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -30,7 +31,7 @@ fun CoinListScreen(
     } else if (state.isError) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Button(
-                onClick = onRetry
+                onClick = { onAction(CoinListAction.Retry) }
             ) {
                 Text(text = "Retry")
             }
@@ -44,7 +45,7 @@ fun CoinListScreen(
                 CoinListItem(
                     coinUi = coinUi,
                     onClick = {
-                        TODO()
+                        onAction(CoinListAction.OnCoinClick(coinUi))
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
