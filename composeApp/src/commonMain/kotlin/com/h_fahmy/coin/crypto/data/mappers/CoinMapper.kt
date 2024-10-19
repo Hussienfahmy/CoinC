@@ -4,8 +4,9 @@ import com.h_fahmy.coin.crypto.data.networking.dto.CoinDto
 import com.h_fahmy.coin.crypto.data.networking.dto.CoinPriceDto
 import com.h_fahmy.coin.crypto.domain.Coin
 import com.h_fahmy.coin.crypto.domain.CoinPrice
-import java.time.Instant
-import java.time.ZoneId
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 fun CoinDto.toCoin(): Coin {
     return Coin(
@@ -24,7 +25,7 @@ fun CoinPriceDto.toCoinPrice(): CoinPrice {
     return CoinPrice(
         priceUsd = priceUsd,
         dateTime = Instant
-            .ofEpochMilli(time)
-            .atZone(ZoneId.systemDefault())
+            .fromEpochMilliseconds(time)
+            .toLocalDateTime(TimeZone.currentSystemDefault())
     )
 }

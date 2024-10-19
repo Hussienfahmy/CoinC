@@ -3,9 +3,9 @@ package com.h_fahmy.coin.core.data.networking
 import com.h_fahmy.coin.core.domain.util.NetworkError
 import com.h_fahmy.coin.core.domain.util.Result
 import io.ktor.client.statement.HttpResponse
+import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
 import kotlinx.serialization.SerializationException
-import java.nio.channels.UnresolvedAddressException
 import kotlin.coroutines.coroutineContext
 
 suspend inline fun <reified T> safeCall(

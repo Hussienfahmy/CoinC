@@ -1,11 +1,10 @@
 package com.h_fahmy.coin.crypto.presentation.models
 
+import com.h_fahmy.coin.core.presentation.util.formatFloat
 import com.h_fahmy.coin.crypto.domain.Coin
 import com.h_fahmy.coin.core.presentation.util.getDrawableForCoin
 import com.h_fahmy.coin.crypto.presentation.coin_detail.chart.DataPoint
 import org.jetbrains.compose.resources.DrawableResource
-import java.text.NumberFormat
-import java.util.Locale
 
 data class CoinUi(
     val id: String,
@@ -38,12 +37,8 @@ fun Coin.toCoinUi(): CoinUi {
 }
 
 fun Double.toDisplayableNumber(): DisplayableNumber {
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault()).apply {
-        minimumFractionDigits = 2
-        maximumFractionDigits = 2
-    }
     return DisplayableNumber(
         value = this,
-        formatted = formatter.format(this)
+        formatted = formatFloat(this.toFloat(), 2, 2)
     )
 }

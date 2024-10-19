@@ -9,15 +9,15 @@ import com.h_fahmy.coin.core.domain.util.map
 import com.h_fahmy.coin.crypto.data.mappers.toCoin
 import com.h_fahmy.coin.crypto.data.mappers.toCoinPrice
 import com.h_fahmy.coin.crypto.data.networking.dto.CoinHistoryDto
-import com.h_fahmy.coin.crypto.data.networking.dto.CoinPriceDto
 import com.h_fahmy.coin.crypto.data.networking.dto.CoinsResponseDto
 import com.h_fahmy.coin.crypto.domain.Coin
 import com.h_fahmy.coin.crypto.domain.CoinPrice
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import java.time.ZoneId
-import java.time.ZonedDateTime
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 
 class RemoteCoinDataSource(
     private val client: HttpClient
@@ -33,20 +33,16 @@ class RemoteCoinDataSource(
 
     override suspend fun getCoinHistory(
         coinId: String,
-        start: ZonedDateTime,
-        end: ZonedDateTime
+        start: LocalDateTime,
+        end: LocalDateTime
     ): Result<List<CoinPrice>, NetworkError> {
-        val startMillis = start.
-            withZoneSameInstant(ZoneId.of("UTC"))
-            .toInstant()
-            .toEpochMilli()
+        val startMillis = start.toInstant(TimeZone.UTC)
+            .toEpochMilliseconds()
 
-        val endMillis = end.
-        withZoneSameInstant(ZoneId.of("UTC"))
-            .toInstant()
-            .toEpochMilli()
+        val endMillis = end.toInstant(TimeZone.UTC)
+            .toEpochMilliseconds()
 
-        return safeCall<CoinHistoryDto>{
+        return safeCall<CoinHistoryDto> {
             client.get(urlString = constructUrl("/assets/$coinId/history")) {
                 parameter("interval", "h6")
                 parameter("start", startMillis)

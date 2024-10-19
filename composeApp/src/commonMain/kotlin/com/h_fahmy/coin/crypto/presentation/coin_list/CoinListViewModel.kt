@@ -16,9 +16,15 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration.Companion.days
 
+@OptIn(FormatStringsInDatetimeFormats::class)
 class CoinListViewModel(
     private val coinDataSource: CoinDataSource
 ) : ViewModel() {
@@ -52,8 +58,9 @@ class CoinListViewModel(
             coinDataSource
                 .getCoinHistory(
                     coinId = coinUi.id,
-                    start = ZonedDateTime.now().minusDays(10),
-                    end = ZonedDateTime.now()
+                    start = Clock.System.now().minus(10.days)
+                        .toLocalDateTime(TimeZone.currentSystemDefault()),
+                    end = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
                 )
                 .onSuccess { history ->
                     val dataPoints = history
@@ -62,9 +69,9 @@ class CoinListViewModel(
                             DataPoint(
                                 x = it.dateTime.hour.toFloat(),
                                 y = it.priceUsd.toFloat(),
-                                xLabel = DateTimeFormatter
-                                    .ofPattern("ha\nM/d")
-                                    .format(it.dateTime)
+                                xLabel = LocalDateTime.Format {
+                                    byUnicodePattern("HH\nM/d")
+                                }.format(it.dateTime)
                             )
                         }
 

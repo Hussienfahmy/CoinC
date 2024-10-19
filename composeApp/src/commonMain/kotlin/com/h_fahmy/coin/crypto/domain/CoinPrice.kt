@@ -1,8 +1,9 @@
 package com.h_fahmy.coin.crypto.domain
 
-import java.time.ZonedDateTime
+import kotlinx.datetime.LocalDateTime
+
 
 data class CoinPrice(
     val priceUsd: Double,
-    val dateTime: ZonedDateTime
+    val dateTime: LocalDateTime
 )
