@@ -3,6 +3,7 @@ package com.h_fahmy.coin.crypto.presentation.coin_detail.chart
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -91,6 +92,20 @@ fun LineChart(
                 detectHorizontalDragGestures { change, _ ->
                     val newSelectedDataPointIndex = getSelectedDataPointIndex(
                         touchOffsetX = change.position.x,
+                        triggerWidth = xLabelWidth,
+                        drawPoints = drawPoints
+                    )
+                    isShowingDataPoints =
+                        (newSelectedDataPointIndex + visibleDataPointsIndices.first) in
+                                visibleDataPointsIndices
+                    if(isShowingDataPoints) {
+                        onSelectedDataPoint(dataPoints[newSelectedDataPointIndex])
+                    }
+                }
+            }.pointerInput(drawPoints, xLabelWidth){
+                detectTapGestures {
+                    val newSelectedDataPointIndex = getSelectedDataPointIndex(
+                        touchOffsetX = it.x,
                         triggerWidth = xLabelWidth,
                         drawPoints = drawPoints
                     )
