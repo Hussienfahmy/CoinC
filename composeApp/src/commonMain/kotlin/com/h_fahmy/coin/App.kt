@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.h_fahmy.coin.core.navigation.AdaptiveCoinListDetailPane
 import com.h_fahmy.coin.core.presentation.util.ObserveAsEvents
 import com.h_fahmy.coin.core.presentation.util.string
 import com.h_fahmy.coin.crypto.presentation.coin_detail.CoinDetailScreen
@@ -37,7 +38,6 @@ fun App(
             snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
         ) { innerPadding ->
             val viewModel = koinViewModel<CoinListViewModel>()
-            val state by viewModel.state.collectAsStateWithLifecycle()
 
             ObserveAsEvents(
                 viewModel.events,
@@ -50,18 +50,10 @@ fun App(
                 }
             )
 
-            if (state.selectedCoin != null) {
-                CoinDetailScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    state = state
-                )
-            } else {
-                CoinListScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    state = state,
-                    onAction = viewModel::onAction
-                )
-            }
+            AdaptiveCoinListDetailPane(
+                modifier = Modifier.padding(innerPadding),
+                viewModel = viewModel
+            )
         }
     }
 }

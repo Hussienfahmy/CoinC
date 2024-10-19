@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.bundles.koin)
             implementation(libs.bundles.ktor)
+            implementation(libs.compose.adaptive.navigation)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
