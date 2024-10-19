@@ -2,6 +2,7 @@ package com.h_fahmy.coin.crypto.presentation.models
 
 import com.h_fahmy.coin.crypto.domain.Coin
 import com.h_fahmy.coin.core.presentation.util.getDrawableForCoin
+import com.h_fahmy.coin.crypto.presentation.coin_detail.chart.DataPoint
 import org.jetbrains.compose.resources.DrawableResource
 import java.text.NumberFormat
 import java.util.Locale
@@ -15,6 +16,7 @@ data class CoinUi(
     val priceUsd: DisplayableNumber,
     val changePercent24Hr: DisplayableNumber,
     val iconRes: DrawableResource,
+    val coinPriceHistory: List<DataPoint> = emptyList()
 )
 
 data class DisplayableNumber(
